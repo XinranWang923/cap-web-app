@@ -20,7 +20,7 @@
       editurl: '/projects/update',
       datatype: "json",
       mtype: 'GET',
-      colNames: ['ID#', 'Department', 'Name', 'Status', 'Release Date', 'Description'],
+      colNames: ['ID#', 'Department', 'Name', 'Status', 'Capitalizable', 'Weight', 'Release Date', 'Description'],
       colModel: [
         {
           name: "id",
@@ -51,8 +51,20 @@
           editoptions: {value: '1:Active;2:Suspended;3:Released'},
           formatter: 'select'
         },
-
-
+        {
+          name: 'is_capitalizable',
+          index: "is_capitalizable",
+          width: (pageWidth * (7 / 100)),
+          align: "center",
+          editable: true, edittype: 'select', editoptions: {value: 'true:Y;false:N'}, formatter: 'select'
+        },
+        {
+          name: 'weight',
+          index: "weight",
+          width: (pageWidth * (5 / 100)),
+          align: "right",
+          editable: true, formatter: weightFormatter, unformat: unformatWeight
+        },
         {
           name: 'release_date',
           index: "release_date",
