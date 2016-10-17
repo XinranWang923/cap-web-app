@@ -8,7 +8,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="<%= root_path %>">Redbubble</a>
+      <a class="navbar-brand" href="<%= root_path %>">CC-Assignment2</a>
       <p class="navbar-text"><a href="/home/show?opr=previous_iteration"> << </a></p>
       <p class="navbar-text"><%= current_iteration.name %> ( <%= current_iteration.start_date.strftime('%d-%b') %> to <%= current_iteration.end_date.strftime('%d-%b') %> )</p>
       <p class="navbar-text"><a href="/home/show?opr=next_iteration"> >> </a></p>
@@ -20,8 +20,7 @@
         <li><%= link_to "Teams" , teams_path %></li>
         <li><%= link_to "Projects" , projects_path %></li>
         <li><%= link_to "Employees" , employees_path %></li>
-        <li><%= link_to "Iterations" , iterations_path %></li>
-        <li><%= link_to "Groups" , capitalizable_groups_path %></li>
+
         <li>
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Member Management <span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -29,7 +28,7 @@
             <li><%= link_to "Employee Allocation" , employee_structure_path %></li>
           </ul>
         </li>
-        <li><%= link_to "Capitalization" , cap_hour_calculation_path %></li>
+
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
