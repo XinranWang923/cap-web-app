@@ -20,7 +20,7 @@
       editurl: '/projects/update',
       datatype: "json",
       mtype: 'GET',
-      colNames: ['ID#', 'Department', 'Name', 'Status', 'Capitalizable', 'Weight', 'Release Date', 'Description'],
+      colNames: ['ID#', 'Department', 'Name', 'Status', 'Start process', 'Weight', 'Release Date', 'Description'],
       colModel: [
         {
           name: "id",
@@ -52,7 +52,7 @@
           formatter: 'select'
         },
         {
-          name: 'start_process',
+          name: 'is_capitalizable',
           index: "is_capitalizable",
           width: (pageWidth * (7 / 100)),
           align: "center",
