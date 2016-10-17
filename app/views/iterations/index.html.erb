@@ -1,0 +1,87 @@
+<div class="container bs-docs-container">
+<p id="notice"><%= notice %></p>
+
+<h1>Iterations</h1>
+
+<div class="mycenter">
+  <table id="jqGrid"></table>
+  <div id="jqGridPager"></div>
+</div>
+</div>
+<script type="text/javascript">
+
+  $(document).ready(function () {
+    var pageWidth = $("#jqGrid").parent().width()
+    $("#jqGrid").jqGrid({
+      url: "/iterations",
+      editurl: '/iterations/update',
+      datatype: "json",
+      mtype: 'GET',
+      colNames: ['ID#', 'Start Date', 'End Date', 'Work Days'],
+      colModel: [
+        {
+          name: "id",
+          index: "id",
+          width: (pageWidth*(20/100))
+        },
+        {
+          name: 'start_date',
+          index: "start_date",
+          formatter: 'date', formatoptions: {newformat: 'd-M-Y'}, datefmt: 'd-M-Y',
+          editable: true,
+          edittype:'text', editoptions:{size:10,maxlength:10,dataInit:getDate},
+          width: (pageWidth*(30/100))
+        },
+        {
+          name: 'end_date',
+          index: "end_date",
+          formatter: 'date', formatoptions: {newformat: 'd-M-Y'}, datefmt: 'd-M-Y',
+          editable: true,
+          edittype:'text', editoptions:{size:10,maxlength:10,dataInit:getDate},
+          width: (pageWidth*(30/100))
+        },
+        {
+          name: 'work_day',
+          index: "work_day",
+          editable: true,
+          width: (pageWidth*(20/100))
+        }
+      ],
+      pager: "#jqGridPager",
+      height: 'auto',
+      rowNum: 20,
+      rowList : [10, 20, 30],
+      sortname : 'id',
+      viewrecords: true,
+
+      onSelectRow: editRow, // the javascript function to call on row click. will ues to to put the row in edit mode
+
+    }).jqGrid("navGrid", "#jqGridPager", {
+      edit: false,
+      add: true,
+      del: true,
+      search: false,
+      refresh: false,
+      view: false
+    }, {url: "/iterations/update"}, {url: "/iterations/create"}, {url: "iterations/destroy/"}, {
+      closeAfterEdit: true,
+      closeOnEscape: true
+    });
+
+    function getDate(el) {
+      $(el).datepicker({dateFormat:'d-M-yy'});
+    }
+
+     var lastSelection;
+
+     function editRow(id) {
+     if (id && id !== lastSelection) {
+     var grid = $("#jqGrid");
+     grid.jqGrid('restoreRow', lastSelection);
+     grid.jqGrid('editRow', id, {keys: true});
+     lastSelection = id;
+     }
+     }
+  });
+
+</script>

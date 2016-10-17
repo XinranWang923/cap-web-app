@@ -1,0 +1,99 @@
+<div class="container bs-docs-container">
+<p id="notice"><%= notice %></p>
+
+<h1>Team Members</h1>
+
+<div class="mycenter">
+  <table id="jqGrid"></table>
+  <div id="jqGridPager"></div>
+</div>
+</div>
+<script type="text/javascript">
+
+  var team_options = '';
+  <% Team.all.each do |team| %>
+  team_options += $("<div/>").html('<%= team.id%>:<%= team.name%>;').text();
+  <% end %>
+  team_options = team_options.substring(0, team_options.length - 1);
+
+  var employee_options = '';
+  <% Employee.all.each do |employee| %>
+  employee_options += $("<div/>").html('<%= employee.id%>:<%= employee.name%>;').text();
+  <% end %>
+  employee_options = employee_options.substring(0, employee_options.length - 1);
+
+  $(document).ready(function () {
+    var pageWidth = $("#jqGrid").parent().width()
+    $("#jqGrid").jqGrid({
+      url: "/team_members",
+      editurl: '/team_members/update',
+      datatype: "json",
+      mtype: 'GET',
+      colNames: ['ID#', 'Team', 'Employee', 'Dedication Weight'],
+      colModel: [
+        {
+          name: "id",
+          index: "id",
+          width: (pageWidth*(5/100))
+        },
+        {
+          name: 'team_id',
+          index: "team_id",
+          width: (pageWidth*(45/100)),
+          edittype: 'select',
+          editoptions: {value: team_options},
+          formatter: 'select',
+          editable: true // must set editable to true if you want to make the field editable
+        },
+        {
+          name: 'employee_id',
+          index: "employee_id",
+          width: (pageWidth*(40/100)),
+          edittype: 'select',
+          editoptions: {value: employee_options},
+          formatter: 'select',
+          editable: true
+        },
+        {
+          name: 'dedication_weight',
+          index: "dedication_weight",
+          width: (pageWidth*(10/100)),
+          editable: true
+        }
+      ],
+      pager: "#jqGridPager",
+      height: 'auto',
+      rowNum: 20,
+      rowList : [10, 20, 30],
+      sortname : 'id',
+      viewrecords: true,
+
+      onSelectRow: editRow, // the javascript function to call on row click. will ues to to put the row in edit mode
+
+    }).jqGrid("navGrid", "#jqGridPager", {
+      edit: false,
+      add: true,
+      del: true,
+      search: false,
+      refresh: false,
+      view: false
+    }, {url: "/team_members/update"}, {url: "/team_members/create"}, {url: "team_members/destroy/"}, {
+      closeAfterEdit: true,
+      closeOnEscape: true
+    });
+
+
+     var lastSelection;
+
+     function editRow(id) {
+     if (id && id !== lastSelection) {
+     var grid = $("#jqGrid");
+     grid.jqGrid('restoreRow', lastSelection);
+     grid.jqGrid('editRow', id, {keys: true});
+     lastSelection = id;
+     }
+     }
+
+  });
+
+</script>
